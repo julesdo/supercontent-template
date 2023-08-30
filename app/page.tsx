@@ -31,12 +31,12 @@ export default function HomePage() {
 
     return (
         <div>
-            <Dialog>
+            <Dialog open>
                 <DialogTrigger>Open</DialogTrigger>
                 <DialogContent>
-                    <DialogHeader>
-                        <DialogTitle>Are you sure absolutely sure?</DialogTitle>
-                        <DialogDescription>
+                    <DialogHeader className='grid gap-4'>
+                        <DialogTitle>Add your storeId</DialogTitle>
+                        <DialogDescription className='grid gap-2'>
                             <Input onChange={handleStoreId} placeholder="Enter your storeId" />
                             <Button onClick={handleStoreIdSubmit}>Submit</Button>
                         </DialogDescription>
