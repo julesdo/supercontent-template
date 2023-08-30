@@ -18,7 +18,7 @@ const HomePage = async ({params} :{params : { storeId : string}}) => {
           data={billboards[0]}
         />
         <div className="flex flex-col gap-y-8 px-4 sm:px-6 lg:px-8">
-          <ProductList title="Featured Products" items={products} />
+          <ProductList storeId={params.storeId} title="Featured Products" items={products} />
         </div>
       </div>
     </Container>
