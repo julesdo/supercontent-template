@@ -1,51 +1,31 @@
-'use client';
+import getBillboard from "@/actions/get-billboard";
+import getBillboards from "@/actions/get-billboards";
+import getProducts from "@/actions/get-products";
+import ProductList from "@/components/product-list";
+import Billboard from "@/components/ui/billboard";
+import Button from "@/components/ui/button";
+import Container from "@/components/ui/container";
+import { storeId } from "@/lib/utils";
 
-import { SetStateAction, useEffect, useState } from 'react';
+export const revalidate = 0;
 
-import {
-    Dialog,
-    DialogContent,
-    DialogDescription,
-    DialogHeader,
-    DialogTitle,
-    DialogTrigger,
-} from "@/components/ui/dialog"
-import { Input } from '@/components/ui/input';
-import { redirect, useRouter } from 'next/navigation';
-import Button from '@/components/ui/button';
+const HomePage = async () => {
+  const products = await getProducts({ isFeatured: true }, storeId);
+  const billboards = await getBillboards(storeId);
 
-
-
-export default function HomePage() {
-
-    const [storeId, setStoreId] = useState('');
-    const router = useRouter();
-
-    const handleStoreId = (e: { target: { value: SetStateAction<string>; }; }) => {
-        setStoreId(e.target.value);
-    }
-
-    const handleStoreIdSubmit = () => {
-        router.push(`/${storeId}`);
-    }
-
-    return (
-        <div>
-            <Dialog open>
-                <DialogTrigger>Open</DialogTrigger>
-                <DialogContent>
-                    <DialogHeader className='grid gap-4'>
-                        <DialogTitle>Add your storeId</DialogTitle>
-                        <DialogDescription className='grid gap-2'>
-                            <Input onChange={handleStoreId} placeholder="Enter your storeId" />
-                            <Button onClick={handleStoreIdSubmit}>Submit</Button>
-                        </DialogDescription>
-                    </DialogHeader>
-                </DialogContent>
-            </Dialog>
-
+  return (
+    <Container>
+      <div className="space-y-10 pb-10">
+        <Billboard 
+          data={billboards[0]}
+        />
+        <div className="flex flex-col gap-y-8 px-4 sm:px-6 lg:px-8">
+          <ProductList storeId={storeId} title="Featured Products" items={products} />
         </div>
+        <Button className="bg-primary">Shop All</Button>
+      </div>
+    </Container>
+  )
+};
 
-    )
-
-}
+export default HomePage;

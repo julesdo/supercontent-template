@@ -11,13 +11,13 @@ import getCategory from '@/actions/get-category';
 import Filter from './components/filter';
 import MobileFilters from './components/mobile-filters';
 import getCustomField from '@/actions/get-colors';
+import { storeId } from '@/lib/utils';
 
 export const revalidate = 0;
 
 interface CategoryPageProps {
   params: {
     categoryId: string;
-    storeId: string;
   },
   searchParams: {
     customField: string;
@@ -30,9 +30,9 @@ const CategoryPage: React.FC<CategoryPageProps> = async ({
   const products = await getProducts({ 
     categoryId: params.categoryId,
     customField: searchParams.customField,
-  }, params.storeId);
-  const dynamicFields = await getCustomField(params.storeId);
-  const category = await getCategory(params.categoryId, params.storeId);
+  }, storeId);
+  const dynamicFields = await getCustomField(storeId);
+  const category = await getCategory(params.categoryId, storeId);
 
   return (
     <div className="bg-white">
@@ -57,7 +57,7 @@ const CategoryPage: React.FC<CategoryPageProps> = async ({
               {products.length === 0 && <NoResults />}
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
                 {products.map((item) => (
-                  <ProductCard key={item.id} data={item} storeId={params.storeId} />
+                  <ProductCard key={item.id} data={item} storeId={storeId} />
                 ))}
               </div>
             </div>
