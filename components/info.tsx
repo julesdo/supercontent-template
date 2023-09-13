@@ -2,7 +2,7 @@
 
 import { ShoppingCart } from "lucide-react";
 
-import Currency  from "@/components/ui/currency";
+import Currency from "@/components/ui/currency";
 import Button from "@/components/ui/button";
 import { Product } from "@/types";
 import useCart from "@/hooks/use-cart";
@@ -19,7 +19,7 @@ const Info: React.FC<InfoProps> = ({ data }) => {
     cart.addItem(data);
   }
 
-  return ( 
+  return (
     <div>
       <h1 className="text-3xl font-bold text-gray-900">{data.name}</h1>
       <div className="mt-3 flex items-end justify-between">
@@ -36,12 +36,12 @@ const Info: React.FC<InfoProps> = ({ data }) => {
         <div className="flex items-center gap-x-3">
           <div className="text-gray-500">Description:</div>
           <div className="text-gray-900 font-semibold">{data.description}</div>
+        </div>
+        {data.dynamicFields.createMany.data.map((item) => (
+          <div key={item.value} className="flex items-center gap-x-3">
+            <div className="text-gray-500">{item.name} :</div>
+            <div className="text-gray-900 font-semibold">{item.value}</div>
           </div>
-          {data.dynamicFields.createMany.data.map((item) => (
-                    <div className="flex items-center gap-x-3">
-                    <div className="text-gray-500">{item.name} :</div>
-                    <div className="text-gray-900 font-semibold">{item.value}</div>
-                    </div>
         ))}
       </div>
       <div className="mt-10 flex items-center gap-x-3">
@@ -53,5 +53,5 @@ const Info: React.FC<InfoProps> = ({ data }) => {
     </div>
   );
 }
- 
+
 export default Info;
