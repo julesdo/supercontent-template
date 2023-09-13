@@ -39,3 +39,4 @@ Create your environment variables
 
 ```bash
 cp env.example .env.local
+```
