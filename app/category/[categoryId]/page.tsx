@@ -64,7 +64,7 @@ flattenedArray.forEach(obj => {
               {products
                   .filter((product) => {
                     if (!searchParams.customField) return true;
-                    return product.dynamicField.createMany.data.some((field: { value: string; }) => field.value === searchParams.split('=')[1])
+                    return product.dynamicFields.createMany.data.some((field) => field === searchParams);
                   })
                   .map((item) => (
                     <ProductCard key={item.id} data={item} storeId={storeId} />

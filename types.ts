@@ -1,5 +1,14 @@
+
 export interface Product {
-  dynamicField: any;
+  dynamicFields: {
+    createMany: {
+      data: {
+        name: string;
+        type: string;
+        value: string;
+      }[];
+    };
+  };
   id: string;
   category: Category;
   name: string;

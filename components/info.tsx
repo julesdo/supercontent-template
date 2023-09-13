@@ -29,14 +29,19 @@ const Info: React.FC<InfoProps> = ({ data }) => {
       </div>
       <hr className="my-4" />
       <div className="flex flex-col gap-y-6">
-
-        {data.dynamicField?.createMany?.data.map((field: { id: Key | null | undefined; name: string | number | boolean | ReactElement<any, string | JSXElementConstructor<any>> | ReactFragment | ReactPortal | PromiseLikeOfReactNode | null | undefined; value: string | number | boolean | ReactElement<any, string | JSXElementConstructor<any>> | ReactFragment | ReactPortal | PromiseLikeOfReactNode | null | undefined; }) => (
-          <div key={field.id} className="flex items-center gap-x-4">
-            <h3 className="font-semibold text-black">{field.name}:</h3>
-            <div>
-              {field.value}
-            </div>
+        <div className="flex items-center gap-x-3">
+          <div className="text-gray-500">Category:</div>
+          <div className="text-gray-900 font-semibold">{data.category?.name}</div>
+        </div>
+        <div className="flex items-center gap-x-3">
+          <div className="text-gray-500">Description:</div>
+          <div className="text-gray-900 font-semibold">{data.description}</div>
           </div>
+          {data.dynamicFields.createMany.data.map((item) => (
+                    <div className="flex items-center gap-x-3">
+                    <div className="text-gray-500">{item.name} :</div>
+                    <div className="text-gray-900 font-semibold">{item.value}</div>
+                    </div>
         ))}
       </div>
       <div className="mt-10 flex items-center gap-x-3">
