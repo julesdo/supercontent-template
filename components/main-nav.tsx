@@ -21,6 +21,21 @@ const MainNav: React.FC<MainNavProps> = ({
     label: route.name,
     active: pathname === `/category/${route.id}`,
   }));
+
+  routes.unshift({
+    href: `/`,
+    label: 'Home',
+    active: pathname === `/`,
+  }
+  );
+
+  routes.push(
+    {
+      href: `/blog`,
+      label: 'Blog',
+      active: pathname === `/blog`,
+    }
+  );
   return (
     <nav
       className="mx-6 flex items-center space-x-4 lg:space-x-6"
