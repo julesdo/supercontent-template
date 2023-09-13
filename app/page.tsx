@@ -12,17 +12,17 @@ export const revalidate = 0;
 const HomePage = async () => {
   const products = await getProducts({ isFeatured: true }, storeId);
   const billboards = await getBillboards(storeId);
+  const homeBillboard = billboards.filter((billboard) => billboard.label === 'home')[0];
 
   return (
     <Container>
       <div className="space-y-10 pb-10">
         <Billboard 
-          data={billboards[0]}
+          data={homeBillboard}
         />
         <div className="flex flex-col gap-y-8 px-4 sm:px-6 lg:px-8">
           <ProductList storeId={storeId} title="Featured Products" items={products} />
         </div>
-        <Button className="bg-primary">Shop All</Button>
       </div>
     </Container>
   )

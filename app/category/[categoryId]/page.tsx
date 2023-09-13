@@ -7,11 +7,10 @@ import NoResults from '@/components/ui/no-results';
 
 import getProducts from "@/actions/get-products";
 import getCategory from '@/actions/get-category';
-
+import { storeId } from '@/lib/utils';
+import getCustomField from '@/actions/get-customfields';
 import Filter from './components/filter';
 import MobileFilters from './components/mobile-filters';
-import getCustomField from '@/actions/get-colors';
-import { storeId } from '@/lib/utils';
 
 export const revalidate = 0;
 
@@ -19,46 +18,57 @@ interface CategoryPageProps {
   params: {
     categoryId: string;
   },
-  searchParams: {
-    customField: string;
-  }
+  searchParams: any
 }
 
-const CategoryPage: React.FC<CategoryPageProps> = async ({ 
-  params, 
-  searchParams}) => {
-  const products = await getProducts({ 
+const CategoryPage: React.FC<CategoryPageProps> = async ({
+  params,
+  searchParams }) => {
+  const products = await getProducts({
     categoryId: params.categoryId,
-    customField: searchParams.customField,
   }, storeId);
-  const dynamicFields = await getCustomField(storeId);
+  console.log(searchParams)
   const category = await getCategory(params.categoryId, storeId);
+  const dynamicFields = await getCustomField(storeId);
+  // @ts-ignore
+  const flattenedArray = [].concat(...dynamicFields);
+  const groupedByname = {} as any;
+
+flattenedArray.forEach(obj => {
+  const { name, type, value } = obj;
+
+  if (!groupedByname[name]) {
+    groupedByname[name] = [];
+  }
+
+  groupedByname[name].push({ name, type, value });
+});
+
+
 
   return (
     <div className="bg-white">
       <Container>
-        <Billboard 
+        <Billboard
           data={category.billboard}
         />
         <div className="px-4 sm:px-6 lg:px-8 pb-24">
+        <MobileFilters dynamicFields={groupedByname} />
           <div className="lg:grid lg:grid-cols-5 lg:gap-x-8">
-            <MobileFilters dynamicFields={dynamicFields} />
-            <div className="hidden lg:block">
-              {dynamicFields && 
-              dynamicFields.map((item) => (
-                <Filter 
-                  key={item.name}
-                  data={item}             />
-              ))
-              
-              }
-            </div>
+          <div className='hidden md:block'>
+                <Filter groupedByname={groupedByname} />
+              </div>
             <div className="mt-6 lg:col-span-4 lg:mt-0">
               {products.length === 0 && <NoResults />}
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-                {products.map((item) => (
-                  <ProductCard key={item.id} data={item} storeId={storeId} />
-                ))}
+              {products
+                  .filter((product) => {
+                    if (!searchParams.customField) return true;
+                    return product.dynamicField.createMany.data.some((field: { value: string; }) => field.value === searchParams.split('=')[1])
+                  })
+                  .map((item) => (
+                    <ProductCard key={item.id} data={item} storeId={storeId} />
+                  ))}
               </div>
             </div>
           </div>

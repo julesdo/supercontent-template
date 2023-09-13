@@ -37,3 +37,14 @@ export interface Color {
   name: string;
   value: string;
 };
+
+export interface Post {
+  url: string | undefined;
+  createdAt: string | undefined;
+  id: number;
+  title: string;
+  content: string;
+  image:  {
+      url: string;
+  }[];
+}

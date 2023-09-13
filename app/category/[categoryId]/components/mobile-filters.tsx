@@ -6,7 +6,7 @@ import { Dialog } from "@headlessui/react";
 
 import IconButton from "@/components/ui/icon-button";
 import Button from "@/components/ui/button";
-import { DynamicField } from "@/actions/get-colors";
+import { DynamicField } from "@/actions/get-customfields";
 import Filter from "./filter";
 
 interface MobileFiltersProps {
@@ -41,9 +41,8 @@ const MobileFilters: React.FC<MobileFiltersProps> = ({ dynamicFields }) => {
             </div>
 
             <div className="p-4">
-              {dynamicFields.map((dynamicField) => (
-                <Filter key={dynamicField.name} data={dynamicField} />
-              ))}
+              {/* @ts-ignore */}
+                <Filter groupedByname={dynamicFields} />
             </div>
           </Dialog.Panel>
         </div>
