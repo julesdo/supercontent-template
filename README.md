@@ -36,3 +36,7 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 ## Copy the .env.exemple
 
 Create your environment variables
+
+```bash
+cp env.example .env.local
+```
