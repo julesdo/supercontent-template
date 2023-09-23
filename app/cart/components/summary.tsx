@@ -30,7 +30,7 @@ const Summary = () => {
   }, 0);
 
   const onCheckout = async () => {
-    const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/checkout`, {
+    const response = await axios.post(`https://app.supercontent.dev/api/${process.env.NEXT_PUBLIC_STORE_ID}/checkout`, {
       productIds: items.map((item) => item.id)
     },
     {
