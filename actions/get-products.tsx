@@ -19,7 +19,12 @@ const getProducts = async (query: Query, storeId:string): Promise<Product[]> => 
     },
   });
 
-  const res = await fetch(url);
+  const res = await fetch(url, {
+    method: "GET",
+    headers: {
+      "secretKey": process.env.NEXT_PUBLIC_SECRETKEY || "",
+    },
+  });
 
   return res.json();
 };

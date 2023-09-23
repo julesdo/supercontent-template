@@ -38,7 +38,14 @@ export interface DynamicField {
   }
   
   const getCustomField = async (storeId:string): Promise<DynamicField[]> => {
-    const res = await fetch(`https://app.supercontent.dev/api/${storeId}/products`);
+    const res = await fetch(`https://app.supercontent.dev/api/${storeId}/products`, 
+    {
+      method: "GET",
+      headers: {
+        "secretKey": process.env.NEXT_PUBLIC_SECRETKEY || "",
+      },
+    }
+    );
     const products: any = await res.json();
   
     // Assuming you want to extract the dynamicFields.data from the first product.
