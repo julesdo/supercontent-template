@@ -35,9 +35,6 @@ const Summary = () => {
     },
     {
       method: "POST",
-      headers: {
-        "secretKey": process.env.NEXT_PUBLIC_SECRETKEY || "",
-      },
     }
     );
 
